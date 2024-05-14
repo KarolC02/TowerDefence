@@ -1,0 +1,17 @@
+{
+  "levelNumber": 1,
+  "maxDuration": 35,
+  "breakTime": 4,
+  "enemies": [
+      {"type": "grunt", "startPosition": {"x": 0, "y": 0}, "health": 20, "value": 20, "flying": false, "spawnInterval": 1.0},
+      {"type": "grunt", "startPosition": {"x": 0, "y": 0}, "health": 20, "value": 20, "flying": false, "spawnInterval": 1.0},
+      {"type": "grunt", "startPosition": {"x": 0, "y": 0}, "health": 20, "value": 20, "flying": false, "spawnInterval": 1.0},
+      {"type": "grunt", "startPosition": {"x": 0, "y": 0}, "health": 20, "value": 20, "flying": false, "spawnInterval": 1.0},
+      {"type": "grunt", "startPosition": {"x": 0, "y": 0}, "health": 20, "value": 20, "flying": false, "spawnInterval": 1.0},
+      {"type": "grunt", "startPosition": {"x": 0, "y": 0}, "health": 20, "value": 20, "flying": false, "spawnInterval": 1.0},
+      {"type": "grunt", "startPosition": {"x": 0, "y": 0}, "health": 20, "value": 20, "flying": false, "spawnInterval": 1.0},
+      {"type": "grunt", "startPosition": {"x": 0, "y": 0}, "health": 20, "value": 20, "flying": false, "spawnInterval": 1.0},
+      {"type": "grunt", "startPosition": {"x": 0, "y": 0}, "health": 20, "value": 20, "flying": false, "spawnInterval": 1.0},
+      {"type": "grunt", "startPosition": {"x": 0, "y": 0}, "health": 20, "value": 20, "flying": false, "spawnInterval": 1.0}
+  ]
+}
