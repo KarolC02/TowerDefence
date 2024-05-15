@@ -3,6 +3,7 @@
 #include "ResourcePath.hpp"
 #include <cmath>
 #include <stdexcept>
+#include "Config.hpp"
 
 static sf::Font towerFont;
 
@@ -11,6 +12,9 @@ Tower::Tower(sf::Vector2f position, sf::Color color, float atkSpeed, int rng, co
     if (!towerFont.loadFromFile(resourcePath() + "arial.ttf")) {
         throw std::runtime_error("Failed to load font!");
     }
+        
+    Config& config = Config::getInstance(resourcePath() + "config.json"); // Ensure the config is loaded with the correct file path
+    bulletSpeed = config.getBulletSpeed();
 
     // Setup visual appearance as before
     shape.setSize(sf::Vector2f(TOWER_SIDE_LENGTH, TOWER_SIDE_LENGTH));
@@ -85,7 +89,7 @@ int Tower::getNextUpgradeRange() const {
 }
 
 
-void Tower::draw(sf::RenderWindow& window) const {
+void Tower::draw(sf::RenderWindow& window) {
     window.draw(shape);
     window.draw(text);
     for (const auto& bullet : bullets) {
@@ -93,12 +97,6 @@ void Tower::draw(sf::RenderWindow& window) const {
     }
 }
 
-void Tower::fireBullet(const sf::Vector2f& targetPosition, float bulletSpeed) {
-    if (canAttack()) {
-        bullets.emplace_back(std::make_unique<Bullet>(shape.getPosition(), targetPosition, bulletSpeed, damage));
-        resetCooldown();
-    }
-}
 
 bool Tower::canAttack() const {
     return attackCooldown <= 0;
@@ -113,31 +111,47 @@ sf::Vector2f Tower::getPosition() const {
 }
 
 
-// Inside the Tower class
 void Tower::eraseOutOfScreenBullets(const sf::RenderWindow& window) {
-    auto bulletIter = bullets.begin();
-    while (bulletIter != bullets.end()) {
-        sf::Vector2f pos = (*bulletIter)->getPosition();
-        // Check if the bullet is out of the Arena bounds
-        if (pos.x < LEFT_OFFSET || pos.y < TOP_OFFSET || pos.x > LEFT_OFFSET + ARENA_WIDTH || pos.y > TOP_OFFSET + ARENA_HEIGHT) {
-            bulletIter = bullets.erase(bulletIter);
-        } else {
-            ++bulletIter;
-        }
-    }
+    bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
+                                 [&window](const std::unique_ptr<Bullet>& bullet) {
+                                     return bullet->shouldBeRemoved();
+                                 }),
+                  bullets.end());
 }
 
 
-void Tower::update(float deltaTime, const std::vector<Enemy>& enemies, const sf::RenderWindow& window) {
+// Inside the Tower class
+//void Tower::eraseOutOfScreenBullets(const sf::RenderWindow& window) {
+//    auto bulletIter = bullets.begin();
+//    while (bulletIter != bullets.end()) {
+//        sf::Vector2f pos = (*bulletIter)->getPosition();
+//        // Check if the bullet is out of the Arena bounds
+//        if (pos.x < 0 || pos.y < 0|| pos.x > WINDOW_WIDTH || pos.y > WINDOW_HEIGHT ) { // ZMIENIONE
+//            bulletIter = bullets.erase(bulletIter);
+//        } else {
+//            ++bulletIter;
+//        }
+//    }
+//}
+
+void Tower::fireBullet(const Enemy* targetEnemy, float bulletSpeed) {
+    if (canAttack()) {
+        std::cout << "Firing bullet at enemy: " << targetEnemy->getPosition().x << ", " << targetEnemy->getPosition().y << std::endl;
+        bullets.emplace_back(std::make_unique<Bullet>(shape.getPosition(), targetEnemy, bulletSpeed, damage));
+        resetCooldown();
+    }
+}
+
+void Tower::update(float deltaTime, std::vector<Enemy>& enemies, const sf::RenderWindow& window) {
     // Cooldown timer decrement
-    // std::cout << "There are currently " << bullets.size() << " bullets" << std::endl;
     if (attackCooldown > 0) {
         attackCooldown -= deltaTime;
     }
 
-    for (const auto& enemy : enemies) {
-        if (isInRange(enemy.getShape().getPosition()) && canAttack()) {
-            fireBullet(enemy.getShape().getPosition(), BULLET_SPEED);
+    // Fire bullets at enemies in range
+    for (auto& enemy : enemies) {
+        if (isInRange(enemy.getPosition()) && canAttack()) {
+            fireBullet(&enemy, bulletSpeed);
             break; // Stop checking after finding the first enemy in range
         }
     }
@@ -146,12 +160,18 @@ void Tower::update(float deltaTime, const std::vector<Enemy>& enemies, const sf:
     auto bulletIter = bullets.begin();
     while (bulletIter != bullets.end()) {
         (*bulletIter)->update(deltaTime); // Update the bullet's position
-        ++bulletIter;
+
+        // Check if the bullet should be removed
+        if ((*bulletIter)->shouldBeRemoved()) {
+            bulletIter = bullets.erase(bulletIter);
+        } else {
+            ++bulletIter;
+        }
     }
-    
-    eraseOutOfScreenBullets(window);
-    
 }
+
+
+
 
 bool Tower::isInRange(const sf::Vector2f& enemyPosition) const {
     float dx = enemyPosition.x - shape.getPosition().x;

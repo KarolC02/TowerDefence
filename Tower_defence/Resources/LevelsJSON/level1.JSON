@@ -1,8 +1,0 @@
-{
-  "levelNumber": 1,
-  "maxDuration": 35,
-  "numberOfEnemies": 10,
-  "health": 20,
-  "flying": false
-  "type": normal,
-}

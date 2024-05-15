@@ -2,22 +2,26 @@
 #define BULLET_HPP
 
 #include <SFML/Graphics.hpp>
+#include "Enemy.hpp"
 
 class Bullet {
 private:
-    sf::CircleShape shape;
-    sf::Vector2f direction;
-    float speed;
     int damage;
 
 public:
+    bool shouldBeRemoved() const;
+    sf::CircleShape shape;
+    void updateDirection();
+    const Enemy* targetEnemy;
     virtual ~Bullet() = default;
     sf::Vector2f getPosition() const; // Declare the getPosition method
-    Bullet(sf::Vector2f startPos, sf::Vector2f targetPos, float spd, int dmg);
+    Bullet(const sf::Vector2f& startPosition,const Enemy* targetEnemy, float bulletSpeed, int damage);
+    Bullet(const sf::Vector2f& startPosition,const Enemy* targetEnemy, float bulletSpeed, int damage, sf::Color color);
     virtual void update(float deltaTime);
-
+    sf::Vector2f direction;
     virtual void draw(sf::RenderWindow& window) const;
 
+    float speed;
     // Getters for encapsulated properties
     int getDamage() const { return damage; }
     const sf::CircleShape& getShape() const { return shape; }

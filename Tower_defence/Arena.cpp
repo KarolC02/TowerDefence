@@ -78,9 +78,9 @@ void Arena::update(float dt, const sf::RenderWindow& window) {
     manageLevels();
     spawnCurrentLevelEnemies();
     updateTowers(dt, window);
-    updateEnemies(dt, window);
     checkBulletEnemyCollisions();
-    bashTowerAttack();
+    updateEnemies(dt, window);
+    // bashTowerAttack();
     justAddedTower = false;
 }
 
@@ -140,7 +140,7 @@ void Arena::manageLevels(){
 
 void Arena::draw(sf::RenderWindow& window) const {
     drawBackground(window);
-    drawGrid(window);
+    // drawGrid(window);
     drawTowers(window);
     drawEnemies(window);
 }
@@ -236,67 +236,117 @@ sf::Vector2f Arena::snapToGrid(const sf::Vector2f& position)const{
     return snappedPos;
 }
 
-
-
 void Arena::removeDeadOrOutOfBoundsEnemies(const sf::RenderWindow& window) {
-    std::vector<Enemy>::iterator newEnd = std::remove_if(enemies.begin(), enemies.end(),
-        [this, &window](Enemy& enemy) {
-            bool isOutOfBounds = enemy.getShape().getPosition().x < 0 ||
-                                 enemy.getShape().getPosition().x > LEFT_OFFSET + ARENA_WIDTH + enemy.getShape().getGlobalBounds().width ||
-                                 enemy.getShape().getPosition().y < 0 ||
-                                 enemy.getShape().getPosition().y > TOP_OFFSET + ARENA_HEIGHT + enemy.getShape().getGlobalBounds().height;
+    std::vector<int> indicesToRemove;
+    std::vector<Enemy> enemiesToSpawn;
 
-            if (isOutOfBounds) {
-                livesDebt += 1;  // Increment lives debt if enemy is out of bounds
-                return true;     // Mark for removal
+    // First pass: Identify enemies to remove and collect spawn data
+    for (size_t i = 0; i < enemies.size(); ++i) {
+        Enemy& enemy = enemies[i];
+        bool isOutOfBounds = enemy.getShape().getPosition().x < 0 ||
+                             enemy.getShape().getPosition().x > LEFT_OFFSET + ARENA_WIDTH + enemy.getShape().getGlobalBounds().width ||
+                             enemy.getShape().getPosition().y < 0 ||
+                             enemy.getShape().getPosition().y > TOP_OFFSET + ARENA_HEIGHT + enemy.getShape().getGlobalBounds().height;
+
+        if (isOutOfBounds) {
+            livesDebt += 1;  // Increment lives debt if enemy is out of bounds
+            indicesToRemove.push_back(i);  // Mark for removal
+        } else if (enemy.getIsDead()) {
+            std::cout << "HELLO" << std::endl;
+            payCheck += enemy.getValue();  // Add enemy value to paycheck if dead
+
+            if (enemy.spawn) {
+                std::cout << "SHOULD SPAWN" << std::endl;
+                // Collect new enemies to spawn using emplace_back
+                enemiesToSpawn.emplace_back(enemy.getPosition() + sf::Vector2f(5, 5), enemy.getMaxHealth() / 2, VALUE, enemy.flying, false, enemy.slowImmune, enemy.fast);
+                enemiesToSpawn.emplace_back(enemy.getPosition(), enemy.getMaxHealth() / 2, VALUE, enemy.flying, false, enemy.slowImmune, enemy.fast);
             }
 
-            if (enemy.getIsDead()) {
-                std::cout << "HELLO" << std::endl;
-                payCheck += enemy.getValue();   // Add enemy value to paycheck if dead
-                if( enemy.spawn ){
-                    std::cout << "SHOULD SPAWN" << std::endl;
-                }
-                scorePayCheck += 1;            // Increment score
-                return true;                   // Mark for removal
-            }
-
-            return false; // Keep the enemy if not dead or out of bounds
-        });
-
-    enemies.erase(newEnd, enemies.end()); // Erase all marked enemies from the vector
-}
-
-void Arena::bashTowerAttack() {
-    srand(static_cast<unsigned int>(time(nullptr)));  // Seed random number generator
-
-    for (auto& tower : towers) {
-        BashTower* bashTower = dynamic_cast<BashTower*>(tower.get());
-        if (bashTower && bashTower->canAttack()) {
-            sf::Vector2f towerPos = bashTower->getPosition();
-            float attackRange = bashTower->getRange();
-            float stunChance = bashTower->getChanceToStun();
-            float randomValue = static_cast<float>(rand()) / RAND_MAX;
-            bool doWeStun = (randomValue <= stunChance);
-
-            for (auto& enemy : enemies) {
-                sf::Vector2f enemyPos = enemy.getPosition();
-                float distance = std::hypot(towerPos.x - enemyPos.x, towerPos.y - enemyPos.y);
-
-                if (distance <= attackRange) {
-                    enemy.damage(bashTower->getDamage());
-                    bashTower->resetCooldown();  // Reset cooldown after attack
-
-                    // Check if the enemy should be stunned
-                    float randomValue = static_cast<float>(rand()) / RAND_MAX;  // Generate a random number between 0 and 1
-                    if (doWeStun) {
-                        enemy.stun(STUN_DURATION);  // Stun the enemy, where STUN_DURATION is the duration of the stun
-                    }
-                }
-            }
+            scorePayCheck += 1;  // Increment score
+            indicesToRemove.push_back(i);  // Mark for removal
         }
     }
+
+    // Second pass: Remove identified enemies
+    // We iterate in reverse to avoid invalidating indices
+    for (auto it = indicesToRemove.rbegin(); it != indicesToRemove.rend(); ++it) {
+        enemies.erase(enemies.begin() + *it);
+    }
+
+    // Add new enemies using emplace_back
+    for (const auto& newEnemy : enemiesToSpawn) {
+        std::cout << "JUST PLACEDX AN ENEMY" << std::endl;
+        enemies.emplace_back(newEnemy);
+    }
 }
+
+
+//void Arena::removeDeadOrOutOfBoundsEnemies(const sf::RenderWindow& window) {
+//    std::vector<Enemy>::iterator it = enemies.begin();
+//    while (it != enemies.end()) {
+//        Enemy& enemy = *it;
+//        bool isOutOfBounds = enemy.getShape().getPosition().x < 0 ||
+//                             enemy.getShape().getPosition().x > LEFT_OFFSET + ARENA_WIDTH + enemy.getShape().getGlobalBounds().width ||
+//                             enemy.getShape().getPosition().y < 0 ||
+//                             enemy.getShape().getPosition().y > TOP_OFFSET + ARENA_HEIGHT + enemy.getShape().getGlobalBounds().height;
+//
+//        if (isOutOfBounds) {
+//            livesDebt += 1;  // Increment lives debt if enemy is out of bounds
+//            it = enemies.erase(it);  // Remove the enemy and get the next iterator
+//            continue;
+//        }
+//
+//        if (enemy.getIsDead()) {
+//            std::cout << "HELLO" << std::endl;
+//            payCheck += enemy.getValue();  // Add enemy value to paycheck if dead
+//
+//            if (enemy.spawn) {
+//                std::cout << "SHOULD SPAWN" << std::endl;
+//                // Uncomment and modify the following lines as needed to handle the enemy spawn logic
+//                // enemies.emplace_back(enemy.getPosition() + sf::Vector2f(5, 5), enemy.getHealth() / 2, VALUE, enemy.flying, enemy.spawn, enemy.slowImmune, enemy.fast);
+//                // enemies.emplace_back(enemy.getPosition(), enemy.getHealth() / 2, VALUE, enemy.flying, enemy.spawn, enemy.slowImmune, enemy.fast);
+//            }
+//
+//            scorePayCheck += 1;  // Increment score
+//            it = enemies.erase(it);  // Remove the enemy and get the next iterator
+//            continue;
+//        }
+//
+//        ++it;  // Move to the next enemy
+//    }
+//}
+
+
+
+
+//void Arena::removeDeadOrOutOfBoundsEnemies(const sf::RenderWindow& window) {
+//    std::vector<Enemy>::iterator newEnd = std::remove_if(enemies.begin(), enemies.end(),
+//        [this, &window](Enemy& enemy) {
+//            bool isOutOfBounds = enemy.getShape().getPosition().x < 0 ||
+//                                 enemy.getShape().getPosition().x > LEFT_OFFSET + ARENA_WIDTH + enemy.getShape().getGlobalBounds().width ||
+//                                 enemy.getShape().getPosition().y < 0 ||
+//                                 enemy.getShape().getPosition().y > TOP_OFFSET + ARENA_HEIGHT + enemy.getShape().getGlobalBounds().height;
+//
+//            if (isOutOfBounds) {
+//                livesDebt += 1;  // Increment lives debt if enemy is out of bounds
+//                return true;     // Mark for removal
+//            }
+//
+//            if (enemy.getIsDead()) {
+//                std::cout << "HELLO" << std::endl;
+//                payCheck += enemy.getValue();   // Add enemy value to paycheck if dead
+//                if( enemy.spawn ){
+//                    std::cout << "SHOULD SPAWN" << std::endl;
+//                }
+//                scorePayCheck += 1;            // Increment score
+//                return true;                   // Mark for removal
+//            }
+//
+//            return false; // Keep the enemy if not dead or out of bounds
+//        });
+//
+//    enemies.erase(newEnd, enemies.end()); // Erase all marked enemies from the vector
+//}
 
 
  

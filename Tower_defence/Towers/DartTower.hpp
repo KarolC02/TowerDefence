@@ -6,7 +6,8 @@
 class DartTower : public Tower {
 public:
     DartTower(sf::Vector2f position);
-    void fireBullet(const sf::Vector2f& targetPosition, float bulletSpeed) override;
+    void fireBullet(const Enemy* targetEnemy, float bulletSpeed) override;
+    
 };
 
 #endif // DARTTOWER_HPP

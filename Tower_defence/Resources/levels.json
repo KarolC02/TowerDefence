@@ -3,13 +3,13 @@
         {
             "levelNumber": 1,
             "maxDuration": 35,
-            "numberOfEnemies": 10,
+            "numberOfEnemies": 100,
             "group": false,
             "health": 20,
             "immune": false,
             "fast": false,
             "flying": false,
-            "spawn": true
+            "spawn": false
         },
         {
             "levelNumber": 2,

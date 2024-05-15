@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F9016F702BF2830300D47A76 /* level1.JSON in Resources */ = {isa = PBXBuildFile; fileRef = F9016F6F2BF2830300D47A76 /* level1.JSON */; };
 		F9016F732BF283EF00D47A76 /* LevelManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9016F712BF283EF00D47A76 /* LevelManager.cpp */; };
-		F9016F782BF2A75B00D47A76 /* level2.json in Resources */ = {isa = PBXBuildFile; fileRef = F9016F772BF2A75B00D47A76 /* level2.json */; };
 		F9016F7C2BF2A93300D47A76 /* levels.json in Resources */ = {isa = PBXBuildFile; fileRef = F9016F7B2BF2A93300D47A76 /* levels.json */; };
 		F91605642BD5863D0009275D /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F91605622BD5863D0009275D /* Button.cpp */; };
 		F9299B3A2BB30CAC00071A1B /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = F9299B392BB30CAC00071A1B /* ResourcePath.mm */; };
@@ -41,6 +39,9 @@
 		F93DD32B2BC5798700F903F1 /* BashTower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93DD3292BC5798700F903F1 /* BashTower.cpp */; };
 		F93DD32E2BC5799A00F903F1 /* SwarmTower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93DD32C2BC5799A00F903F1 /* SwarmTower.cpp */; };
 		F93DD3312BC579A400F903F1 /* DartTower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F93DD32F2BC579A400F903F1 /* DartTower.cpp */; };
+		F96DF3012BF514BC00830FF9 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = F96DF3002BF514BC00830FF9 /* config.json */; };
+		F96DF3052BF5177F00830FF9 /* Config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96DF3032BF5177F00830FF9 /* Config.cpp */; };
+		F96DF3082BF52F4900830FF9 /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96DF3062BF52F4900830FF9 /* Particle.cpp */; };
 		F985966C2BBC74B900A905CE /* arial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F985966B2BBC74B900A905CE /* arial.ttf */; };
 		F9A185C12BC2E1B300D913F3 /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9A185BF2BC2E1B300D913F3 /* Enemy.cpp */; };
 		F9A185C42BC2E1DC00D913F3 /* Tower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9A185C22BC2E1DC00D913F3 /* Tower.cpp */; };
@@ -71,11 +72,9 @@
 
 /* Begin PBXFileReference section */
 		F9016F6C2BF2813700D47A76 /* Level.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Level.hpp; sourceTree = "<group>"; };
-		F9016F6F2BF2830300D47A76 /* level1.JSON */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = level1.JSON; sourceTree = "<group>"; };
 		F9016F712BF283EF00D47A76 /* LevelManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelManager.cpp; sourceTree = "<group>"; };
 		F9016F722BF283EF00D47A76 /* LevelManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelManager.hpp; sourceTree = "<group>"; };
 		F9016F742BF2869F00D47A76 /* json.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = json.hpp; path = External_Libraries/json.hpp; sourceTree = SOURCE_ROOT; };
-		F9016F772BF2A75B00D47A76 /* level2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = level2.json; sourceTree = "<group>"; };
 		F9016F7B2BF2A93300D47A76 /* levels.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = levels.json; sourceTree = "<group>"; };
 		F91605622BD5863D0009275D /* Button.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
 		F91605632BD5863D0009275D /* Button.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Button.hpp; sourceTree = "<group>"; };
@@ -112,6 +111,11 @@
 		F93DD32D2BC5799A00F903F1 /* SwarmTower.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwarmTower.hpp; sourceTree = "<group>"; };
 		F93DD32F2BC579A400F903F1 /* DartTower.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DartTower.cpp; sourceTree = "<group>"; };
 		F93DD3302BC579A400F903F1 /* DartTower.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DartTower.hpp; sourceTree = "<group>"; };
+		F96DF3002BF514BC00830FF9 /* config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
+		F96DF3032BF5177F00830FF9 /* Config.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Config.cpp; sourceTree = "<group>"; };
+		F96DF3042BF5177F00830FF9 /* Config.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Config.hpp; sourceTree = "<group>"; };
+		F96DF3062BF52F4900830FF9 /* Particle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Particle.cpp; sourceTree = "<group>"; };
+		F96DF3072BF52F4900830FF9 /* Particle.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Particle.hpp; sourceTree = "<group>"; };
 		F98596482BBC4C5A00A905CE /* DEFINE.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DEFINE.hpp; sourceTree = "<group>"; };
 		F985966B2BBC74B900A905CE /* arial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = arial.ttf; sourceTree = "<group>"; };
 		F9A185BF2BC2E1B300D913F3 /* Enemy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Enemy.cpp; sourceTree = "<group>"; };
@@ -158,15 +162,6 @@
 			path = Level;
 			sourceTree = "<group>";
 		};
-		F9016F6E2BF2824F00D47A76 /* LevelsJSON */ = {
-			isa = PBXGroup;
-			children = (
-				F9016F6F2BF2830300D47A76 /* level1.JSON */,
-				F9016F772BF2A75B00D47A76 /* level2.json */,
-			);
-			path = LevelsJSON;
-			sourceTree = "<group>";
-		};
 		F9299B2A2BB30CAC00071A1B = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +182,7 @@
 		F9299B362BB30CAC00071A1B /* Tower_defence */ = {
 			isa = PBXGroup;
 			children = (
+				F96DF3022BF5170C00830FF9 /* Config */,
 				F9016F742BF2869F00D47A76 /* json.hpp */,
 				F9016F6A2BF2812800D47A76 /* Level */,
 				F9ADE6042BE7CDB300CD8434 /* Enemies */,
@@ -195,8 +191,6 @@
 				F9ADE5F22BDFF49B00CD8434 /* Utils */,
 				F98596482BBC4C5A00A905CE /* DEFINE.hpp */,
 				F9299B3C2BB30CAC00071A1B /* main.cpp */,
-				F9A185C22BC2E1DC00D913F3 /* Tower.cpp */,
-				F9A185C32BC2E1DC00D913F3 /* Tower.hpp */,
 				F9299B3B2BB30CAC00071A1B /* ResourcePath.hpp */,
 				F9299B392BB30CAC00071A1B /* ResourcePath.mm */,
 				F93DD31D2BC48D0500F903F1 /* Game.cpp */,
@@ -222,7 +216,7 @@
 		F9299B3E2BB30CAC00071A1B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F9016F6E2BF2824F00D47A76 /* LevelsJSON */,
+				F96DF3002BF514BC00830FF9 /* config.json */,
 				F985966B2BBC74B900A905CE /* arial.ttf */,
 				F9299B3F2BB30CAC00071A1B /* background.jpg */,
 				F9299B412BB30CAC00071A1B /* doodle_pop.ogg */,
@@ -244,6 +238,15 @@
 				F9299B4D2BB30CDB00071A1B /* sfml-audio.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F96DF3022BF5170C00830FF9 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				F96DF3032BF5177F00830FF9 /* Config.cpp */,
+				F96DF3042BF5177F00830FF9 /* Config.hpp */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		F9ADE5F22BDFF49B00CD8434 /* Utils */ = {
@@ -280,6 +283,8 @@
 		F9F0B8032BCC5EC1005BDED1 /* Towers */ = {
 			isa = PBXGroup;
 			children = (
+				F9A185C22BC2E1DC00D913F3 /* Tower.cpp */,
+				F9A185C32BC2E1DC00D913F3 /* Tower.hpp */,
 				F93DD32C2BC5799A00F903F1 /* SwarmTower.cpp */,
 				F93DD32D2BC5799A00F903F1 /* SwarmTower.hpp */,
 				F93DD3172BC336EC00F903F1 /* PelletTower.cpp */,
@@ -295,6 +300,8 @@
 				F9F397472BC7F180001DBCDF /* TowerButton.cpp */,
 				F9F397482BC7F180001DBCDF /* TowerButton.hpp */,
 				F9ADE5F62BE675B000CD8434 /* TowerUpgrade.h */,
+				F96DF3062BF52F4900830FF9 /* Particle.cpp */,
+				F96DF3072BF52F4900830FF9 /* Particle.hpp */,
 			);
 			path = Towers;
 			sourceTree = "<group>";
@@ -361,10 +368,9 @@
 			files = (
 				F985966C2BBC74B900A905CE /* arial.ttf in Resources */,
 				F9299B462BB30CAC00071A1B /* icon.png in Resources */,
+				F96DF3012BF514BC00830FF9 /* config.json in Resources */,
 				F9299B422BB30CAC00071A1B /* doodle_pop.ogg in Resources */,
 				F9299B402BB30CAC00071A1B /* background.jpg in Resources */,
-				F9016F782BF2A75B00D47A76 /* level2.json in Resources */,
-				F9016F702BF2830300D47A76 /* level1.JSON in Resources */,
 				F9016F7C2BF2A93300D47A76 /* levels.json in Resources */,
 				F9299B442BB30CAC00071A1B /* tuffy.ttf in Resources */,
 			);
@@ -404,12 +410,14 @@
 				F9F397492BC7F180001DBCDF /* TowerButton.cpp in Sources */,
 				F9ADE5F52BDFF4AF00CD8434 /* Pathfinder.cpp in Sources */,
 				F93DD32E2BC5799A00F903F1 /* SwarmTower.cpp in Sources */,
+				F96DF3082BF52F4900830FF9 /* Particle.cpp in Sources */,
 				F91605642BD5863D0009275D /* Button.cpp in Sources */,
 				F9016F732BF283EF00D47A76 /* LevelManager.cpp in Sources */,
 				F9A185C12BC2E1B300D913F3 /* Enemy.cpp in Sources */,
 				F93DD32B2BC5798700F903F1 /* BashTower.cpp in Sources */,
 				F9299B3D2BB30CAC00071A1B /* main.cpp in Sources */,
 				F9299B3A2BB30CAC00071A1B /* ResourcePath.mm in Sources */,
+				F96DF3052BF5177F00830FF9 /* Config.cpp in Sources */,
 				F9A185C42BC2E1DC00D913F3 /* Tower.cpp in Sources */,
 				F9ADE5FD2BE7B9E300CD8434 /* ExplosiveBullet.cpp in Sources */,
 				F93DD3252BC5797600F903F1 /* SquirtTower.cpp in Sources */,

@@ -17,7 +17,7 @@ Game::Game()
       arena(ARENA_WIDTH, ARENA_HEIGHT, sf::Vector2f(LEFT_OFFSET, TOP_OFFSET)),
       currentState(GameState::Default),
       currentlyPlacing(TowerType::None),
-      gold(10000) {
+      gold(START_MONEY) {
     if (!gameFont.loadFromFile(resourcePath() + "arial.ttf")) {
         throw std::runtime_error("Failed to load font!");
     }
@@ -609,7 +609,7 @@ void Game::resetGame() {
     showTowerMenu = false;
     // Clear enemies, towers, and other game elements if stored in lists or
     // vectors
-    time = 1, level = 1, lives = 20, gold = START_MONEY, score = 0;
+    time = 1, level = 1, lives = 20, gold = 80, score = 0;
     enemies.clear();
     towers.clear();
     std::cout << "Game has been reset.\n";

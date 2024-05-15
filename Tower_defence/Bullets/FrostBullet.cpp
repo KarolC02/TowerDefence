@@ -1,8 +1,11 @@
 #include "FrostBullet.hpp"
 
 // Constructor with initialization list corrected
-FrostBullet::FrostBullet(sf::Vector2f startPos, sf::Vector2f targetPos, float spd, int dmg, float slowFactor, float areaEffectRadius, float slowDuration)
-    : Bullet(startPos, targetPos, spd, dmg), slowFactor(slowFactor), areaEffectRadius(areaEffectRadius), slowDuration(slowDuration) {}
+FrostBullet::FrostBullet(sf::Vector2f startPos,const  Enemy* targetEnemy, float spd, int dmg, float slowFactor, float areaEffectRadius, float slowDuration)
+    : Bullet(startPos, targetEnemy, spd, dmg , sf::Color::Blue ), slowFactor(slowFactor), areaEffectRadius(areaEffectRadius), slowDuration(slowDuration)
+{
+        
+    }
 
 float FrostBullet::getSlowFactor() const {
     return slowFactor;

@@ -20,15 +20,17 @@ protected:
     std::vector<TowerUpgrade> upgrades;
     int currentLevel;         // Current upgrade level of the tower
     std::string info;
+    float bulletSpeed;
 
 public:
     int cost; // Cost of the tower
     Tower(sf::Vector2f position, sf::Color color, float atkSpeed, int rng, const std::string& typeSymbol, int dmg, int cst);
     
-    virtual void update(float deltaTime, const std::vector<Enemy>& enemies, const sf::RenderWindow& window);
+    virtual void update(float deltaTime, std::vector<Enemy>& enemies, const sf::RenderWindow& window);
+    virtual void fireBullet(const Enemy* targetEnemy, float bulletSpeed);
+    
     const sf::RectangleShape& getShape() const { return shape; }
-    virtual void draw(sf::RenderWindow& window) const;
-    virtual void fireBullet(const sf::Vector2f& targetPosition, float bulletSpeed);
+    virtual void draw(sf::RenderWindow& window);
     bool canAttack() const;
     void resetCooldown();
     void eraseOutOfScreenBullets(const sf::RenderWindow& window);
