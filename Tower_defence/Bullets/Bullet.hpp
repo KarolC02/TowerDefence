@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 #include "Enemy.hpp"
+#include <vector>
+#include <memory>
 
 class Bullet {
 private:
@@ -15,9 +17,9 @@ public:
     const Enemy* targetEnemy;
     virtual ~Bullet() = default;
     sf::Vector2f getPosition() const; // Declare the getPosition method
-    Bullet(const sf::Vector2f& startPosition,const Enemy* targetEnemy, float bulletSpeed, int damage);
-    Bullet(const sf::Vector2f& startPosition,const Enemy* targetEnemy, float bulletSpeed, int damage, sf::Color color);
-    virtual void update(float deltaTime);
+    Bullet(const sf::Vector2f& startPosition, const Enemy* targetEnemy, float bulletSpeed, int damage);
+    Bullet(const sf::Vector2f& startPosition, const Enemy* targetEnemy, float bulletSpeed, int damage, sf::Color color);
+    virtual void update(float deltaTime, const std::vector<std::unique_ptr<Enemy>>& enemies);
     sf::Vector2f direction;
     virtual void draw(sf::RenderWindow& window) const;
 
@@ -25,9 +27,6 @@ public:
     // Getters for encapsulated properties
     int getDamage() const { return damage; }
     const sf::CircleShape& getShape() const { return shape; }
-    
-
-    // If needed, setters or additional functionality can be added here
 };
 
 #endif // BULLET_HPP

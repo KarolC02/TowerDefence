@@ -32,8 +32,8 @@ void Bullet::updateDirection() {
     }
 }
 
-void Bullet::update(float deltaTime) {
-    // Only update direction if the target is valid and not dead
+void Bullet::update(float deltaTime, const std::vector<std::unique_ptr<Enemy>>& enemies) {
+    // Find the target enemy by ID if the target is valid and not dead
     if (targetEnemy && !targetEnemy->getIsDead()) {
         updateDirection();
     }
