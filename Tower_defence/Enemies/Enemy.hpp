@@ -2,10 +2,14 @@
 #define ENEMY_HPP
 
 #include <SFML/Graphics.hpp>
+#include "Config.hpp"  // Include the Config header
 
 class Enemy {
 protected:
-    sf::CircleShape shape;
+    sf::CircleShape hitbox; // Hitbox calculation
+    sf::CircleShape circleShape; // Circle shape
+    sf::ConvexShape triangleShape; // Triangle shape
+    
     sf::RectangleShape healthBarBackground;
     sf::RectangleShape healthBarForeground;
     sf::Vector2f position;
@@ -25,8 +29,10 @@ protected:
     bool isStunned;
     sf::Clock _slowClock;
     sf::Clock stunTimer;
+    void updateAppearance();
 public:
     
+    bool isFlying() const;
     bool spawn;
     bool slowImmune;
     bool flying;
@@ -38,9 +44,9 @@ public:
     Enemy(sf::Vector2f startPosition, int initialHealth, int value, bool flying, bool spn, bool slw, bool fst);
     virtual void update(float deltaTime);
     virtual void draw(sf::RenderWindow& window) const;
-
+    int getMaxHealth() {return maxHealth;}
     // Getters for private members
-    const sf::CircleShape& getShape() const { return shape; }
+    const sf::CircleShape& getShape() const;
     int getHealth() const { return health; }
     bool getIsDead() const { return isDead; }
     int getValue() const {return value; }

@@ -15,10 +15,10 @@ DartTower::DartTower(sf::Vector2f position)
 
 }
 
-void DartTower::fireBullet(const sf::Vector2f& targetPosition, float bulletSpeed) {
+void DartTower::fireBullet(const Enemy* targetEnemy, float bulletSpeed){
     if (canAttack()) {
         float explosionRadius = 50.0f; // Define an appropriate explosion radius
-        bullets.emplace_back(std::make_unique<ExplosiveBullet>(shape.getPosition(), targetPosition, bulletSpeed, damage, explosionRadius));
+        bullets.emplace_back(std::make_unique<ExplosiveBullet>(shape.getPosition(), targetEnemy, bulletSpeed, damage, explosionRadius));
         resetCooldown();
     }
 }

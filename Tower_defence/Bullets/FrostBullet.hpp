@@ -11,7 +11,7 @@ private:
     float slowDuration;  // Duration of the slow effect
 
 public:
-    FrostBullet(sf::Vector2f startPos, sf::Vector2f targetPos, float spd, int dmg, float slowFactor, float areaEffectRadius, float slowDuration);
+    FrostBullet(sf::Vector2f startPos,const Enemy* targetEnemy, float spd, int dmg, float slowFactor, float areaEffectRadius, float slowDuration);
     float getSlowFactor() const;
     float getAreaEffectRadius() const;
     float getSlowDuration() const;
